@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">守门员</string>
+    <string name="enter_key">输入密钥</string>
+    <string name="open">开启</string>
+    <string name="first_use">第一次使用</string>
+    <string name="confirm_key">确认密钥</string>
+    <string name="confirm">确认</string>
+    <string name="key_not_match">确认密码不正确</string>
+    <string name="press_more_to_exit">再按一次退出</string>
+    <string name="wrong_password">密码错误</string>
+    <string name="label_name">名称</string>
+    <string name="label_username">账户</string>
+    <string name="label_url">网址</string>
+    <string name="label_password">密码</string>
+    <string name="label_comment">备注</string>
+    <string name="label_genkey">生成密码</string>
+    <string name="alert_name_notnull">名称不能为空</string>
+    <string name="alert_passwd_notnull">密码不能为空</string>
+    <string name="alert_text_changed">内容已被更改，直接退出会导致数据丢失，是否继续？</string>
+    <string name="yes">是</string>
+    <string name="no">否</string>
+    <string name="alert_delete_confirm">你想删除它吗？</string>
+    <string name="menu_setting">设置</string>
+    <string name="menu_import">导入</string>
+    <string name="menu_export">导出</string>
+    <string name="label_old_password">旧密码</string>
+    <string name="label_new_password">新密码</string>
+    <string name="label_c_number">包含数字</string>
+    <string name="label_random_password_length">随机密码长度</string>
+    <string name="label_c_upper">包含大写字母</string>
+    <string name="label_c_lower">包含小写字母</string>
+    <string name="label_c_symbol">包含符号</string>
+    <string name="label_mod_password">修改密码</string>
+</resources>

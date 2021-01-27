@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">Goal Keeper</string>
+    <string name="enter_key">Enter key</string>
+    <string name="open">Open</string>
+    <string name="symbol_add" translatable="false">+</string>
+    <string name="first_use">First use</string>
+    <string name="confirm_key">Confirm key</string>
+    <string name="confirm">Confirm</string>
+    <string name="key_not_match">Confirm key is not match</string>
+    <string name="press_more_to_exit">Press again to exit</string>
+    <string name="wrong_password">Wrong passowrd</string>
+    <string name="label_name">Name</string>
+    <string name="label_username">Username</string>
+    <string name="label_url">URL</string>
+    <string name="label_password">Password</string>
+    <string name="label_comment">Comment</string>
+    <string name="label_genkey">Generate Password</string>
+    <string name="alert_name_notnull">Name cannot be empty</string>
+    <string name="alert_passwd_notnull">Password cannot be empty</string>
+    <string name="alert_text_changed">The content has been changed. Quitting directly will result in data loss. Do you want to continue?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="alert_delete_confirm">Do you want to remove it?</string>
+    <string name="menu_setting">Setting</string>
+    <string name="menu_import">Import</string>
+    <string name="menu_export">Export</string>
+    <string name="label_old_password">Old Password</string>
+    <string name="label_new_password">New Password</string>
+    <string name="label_c_number">Contains Number</string>
+    <string name="label_random_password_length">Random Password Length</string>
+    <string name="label_c_upper">Contains Upper Case</string>
+    <string name="label_c_lower">Contains Lower Case</string>
+    <string name="label_c_symbol">Contains Symbol</string>
+    <string name="label_mod_password">Change Password</string>
+</resources>

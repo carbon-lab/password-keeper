@@ -1,0 +1,11 @@
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="tech.sobin.goalkeeper.EditRecordActivity">
+
+    <item
+        android:id="@+id/save_record"
+        android:icon="@android:drawable/ic_menu_save"
+        app:showAsAction="always"
+        android:title="SAVE" />
+</menu>
