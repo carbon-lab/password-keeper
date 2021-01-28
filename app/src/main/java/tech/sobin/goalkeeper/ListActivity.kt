@@ -2,6 +2,7 @@ package tech.sobin.goalkeeper
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -9,6 +10,7 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.*
 import android.widget.AdapterView.OnItemClickListener
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import tech.sobin.json.JSON
@@ -34,6 +36,7 @@ class ListActivity : AppCompatActivity() {
 
 	private var records = arrayListOf<Map<String, String>>()
 
+	@RequiresApi(Build.VERSION_CODES.Q)
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_list)
@@ -124,7 +127,7 @@ class ListActivity : AppCompatActivity() {
 
 	private fun refreshList() {
 		val rdb = db.readableDatabase
-		val res = rdb.rawQuery("SELECT * FROM record ORDER BY id", null)
+		val res = rdb.rawQuery("SELECT * FROM record", null)
 		val list = LinkedList<Map<String, Any>>()
 		records = arrayListOf()
 		while (res.moveToNext()) {
@@ -148,6 +151,8 @@ class ListActivity : AppCompatActivity() {
 				continue
 			}
 		}
+		list.sortBy { it["name"].toString() }
+		records.sortBy { it["name"] }
 		val adapter = RecordAdapter(this, list)
 		listRecord.adapter = adapter
 	}
@@ -193,5 +198,17 @@ class ListActivity : AppCompatActivity() {
 			}
 		}
 		return super.onOptionsItemSelected(item)
+	}
+
+	override fun onStart() {
+		super.onStart()
+		ActivityManager.activityCount += 1
+	}
+
+	override fun onStop() {
+		super.onStop()
+		ActivityManager.activityCount -= 1
+		if (ActivityManager.activityCount == 0)
+			ActivityManager.lockApplication()
 	}
 }

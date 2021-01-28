@@ -22,5 +22,14 @@ class ActivityManager {
 					activity.finish()
 			}
 		}
+
+		fun lockApplication() {
+			for (a in activityStack) {
+				if (!a.isFinishing && a !is MainActivity)
+					a.finish()
+			}
+		}
+
+		var activityCount = 0
 	}
 }

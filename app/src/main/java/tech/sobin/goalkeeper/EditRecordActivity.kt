@@ -194,4 +194,16 @@ class EditRecordActivity : AppCompatActivity() {
 	private fun alert(msgId: Int) {
 		Toast.makeText(this, msgId, Toast.LENGTH_LONG).show()
 	}
+
+	override fun onStart() {
+		super.onStart()
+		ActivityManager.activityCount += 1
+	}
+
+	override fun onStop() {
+		super.onStop()
+		ActivityManager.activityCount -= 1
+		if (ActivityManager.activityCount == 0)
+			ActivityManager.lockApplication()
+	}
 }

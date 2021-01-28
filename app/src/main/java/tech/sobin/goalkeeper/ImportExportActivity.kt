@@ -204,7 +204,7 @@ class ImportExportActivity : AppCompatActivity() {
 				.show()
 
 		} catch (ioe: IOException) {
-			alert(R.string.alert_output_error)
+			alert(R.string.alert_input_error)
 		} catch (e: Exception) {
 			alert(R.string.failed)
 		} finally {
@@ -223,5 +223,17 @@ class ImportExportActivity : AppCompatActivity() {
 
 	private fun alert(msgId: Int) {
 		Toast.makeText(this, msgId, Toast.LENGTH_SHORT).show()
+	}
+
+	override fun onStart() {
+		super.onStart()
+		ActivityManager.activityCount += 1
+	}
+
+	override fun onStop() {
+		super.onStop()
+		ActivityManager.activityCount -= 1
+		if (ActivityManager.activityCount == 0)
+			ActivityManager.lockApplication()
 	}
 }

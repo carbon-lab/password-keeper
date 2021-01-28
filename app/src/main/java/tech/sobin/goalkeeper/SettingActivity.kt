@@ -3,6 +3,7 @@ package tech.sobin.goalkeeper
 import android.content.ContentValues
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.WindowManager
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
@@ -26,6 +27,10 @@ class SettingActivity : AppCompatActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_setting)
+		window.setFlags(
+			WindowManager.LayoutParams.FLAG_SECURE,
+			WindowManager.LayoutParams.FLAG_SECURE)
+		ActivityManager.push(this)
 
 		editOldPassword = findViewById(R.id.editOldPassword)
 		editNewPassword = findViewById(R.id.editNewPassword)
@@ -112,5 +117,17 @@ class SettingActivity : AppCompatActivity() {
 
 	private fun alert(msgId: Int) {
 		Toast.makeText(this, msgId, Toast.LENGTH_SHORT).show()
+	}
+
+	override fun onStart() {
+		super.onStart()
+		ActivityManager.activityCount += 1
+	}
+
+	override fun onStop() {
+		super.onStop()
+		ActivityManager.activityCount -= 1
+		if (ActivityManager.activityCount == 0)
+			ActivityManager.lockApplication()
 	}
 }
