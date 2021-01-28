@@ -59,7 +59,7 @@ class SettingActivity : AppCompatActivity() {
 				cv.put("password_hash", hexOf(SHA512(new.toByteArray())))
 				wdb?.update("context", cv, null, null)
 				AppContext.reloadContext()
-				reEncrypt(SHA512(old.toByteArray()), SHA512(new.toByteArray()))
+				reEncrypt(old.toByteArray(), new.toByteArray())
 				setResult(1)
 				finish()
 			}

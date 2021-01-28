@@ -32,4 +32,13 @@
     <string name="label_c_lower">包含小写字母</string>
     <string name="label_c_symbol">包含符号</string>
     <string name="label_mod_password">修改密码</string>
+    <string name="label_import">导入</string>
+    <string name="label_export">导出</string>
+    <string name="label_file_path">文件路径</string>
+    <string name="alert_output_error">输出文件时发生错误</string>
+    <string name="alert_input_error">输入文件时发生错误</string>
+    <string name="success">成功</string>
+    <string name="failed">失败</string>
+    <string name="alert_choose_path">请选择文件路径</string>
+    <string name="label_input_password">输入密码</string>
 </resources>

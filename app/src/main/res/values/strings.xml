@@ -32,4 +32,13 @@
     <string name="label_c_lower">Contains Lower Case</string>
     <string name="label_c_symbol">Contains Symbol</string>
     <string name="label_mod_password">Change Password</string>
+    <string name="label_import">Import</string>
+    <string name="label_export">Export</string>
+    <string name="label_file_path">File Path</string>
+    <string name="alert_output_error">Failed to write file</string>
+    <string name="alert_input_error">Failed to read file</string>
+    <string name="success">Success</string>
+    <string name="failed">Failed</string>
+    <string name="alert_choose_path">Please choose file path</string>
+    <string name="label_input_password">Enter password</string>
 </resources>

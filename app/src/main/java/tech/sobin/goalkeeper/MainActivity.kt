@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity() {
 				editKey.setText("")
 				val intent = Intent(this, ListActivity::class.java)
 				intent.putExtra("key_sha512", sha)
+				intent.putExtra("origin_key", key)
 				startActivity(intent)
 			} else {
 				Toast.makeText(this,

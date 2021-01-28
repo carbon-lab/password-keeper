@@ -24,6 +24,8 @@ internal class RecordAdapter: SimpleAdapter {
 
 class ListActivity : AppCompatActivity() {
 
+	private lateinit var originKey: String
+
 	private lateinit var db: DBOpenHelper
 	private lateinit var listRecord: ListView
 	private lateinit var btnAdd: Button
@@ -40,6 +42,7 @@ class ListActivity : AppCompatActivity() {
 			WindowManager.LayoutParams.FLAG_SECURE)
 		ActivityManager.push(this)
 
+		originKey = intent.getStringExtra("origin_key")
 		keyText = intent.getStringExtra("key_sha512")!!
 		keyHash = blobOf(keyText)
 
@@ -51,6 +54,7 @@ class ListActivity : AppCompatActivity() {
 		btnAdd.setOnClickListener(View.OnClickListener {
 			val intent = Intent(this, EditRecordActivity::class.java)
 			intent.putExtra("new", true)
+			intent.putExtra("origin_key", originKey)
 			startActivityForResult(intent, 1)
 		})
 
@@ -58,6 +62,7 @@ class ListActivity : AppCompatActivity() {
 			val record = records[position]
 			val intent = Intent(this, EditRecordActivity::class.java)
 			intent.putExtra("new", false)
+			intent.putExtra("origin_key", originKey)
 			intent.putExtra("id", record["id"]?.toInt())
 			intent.putExtra("name", record["name"])
 			intent.putExtra("username", record["username"])
@@ -110,6 +115,9 @@ class ListActivity : AppCompatActivity() {
 					finish()
 				}
 			}
+			4 -> {
+				refreshList()
+			}
 		}
 		super.onActivityResult(requestCode, resultCode, data)
 	}
@@ -123,7 +131,7 @@ class ListActivity : AppCompatActivity() {
 			try {
 				val id = res.getInt(0)
 				val body = res.getBlob(1)
-				val json = String(DefaultDecrypt(body, keyHash)!!)
+				val json = String(DefaultDecrypt(body, originKey.toByteArray())!!)
 				val obj = JSON.parse(json)
 				list.add(mapOf(
 					"name" to obj["name"].toString()
@@ -172,11 +180,16 @@ class ListActivity : AppCompatActivity() {
 			}
 
 			R.id.item_import -> {
-
+				val it = Intent(this, ImportExportActivity::class.java)
+				it.putExtra("mode", "IMPORT")
+				it.putExtra("origin_key", originKey)
+				startActivityForResult(it, 4)
 			}
 
 			R.id.item_export -> {
-
+				val it = Intent(this, ImportExportActivity::class.java)
+				it.putExtra("mode", "EXPORT")
+				startActivityForResult(it, 5)
 			}
 		}
 		return super.onOptionsItemSelected(item)

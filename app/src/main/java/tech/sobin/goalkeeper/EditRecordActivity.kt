@@ -21,6 +21,7 @@ import tech.sobin.json.JSObject
 class EditRecordActivity : AppCompatActivity() {
 
 	private var isNew: Boolean = true
+	private lateinit var originKey: String
 
 	private var recordId: Int = -1
 	private lateinit var editName: EditText
@@ -46,7 +47,8 @@ class EditRecordActivity : AppCompatActivity() {
 			WindowManager.LayoutParams.FLAG_SECURE)
 		ActivityManager.push(this)
 
-		isNew = intent?.getBooleanExtra("new", true)!!
+		isNew = intent.getBooleanExtra("new", true)
+		originKey = intent.getStringExtra("origin_key")
 
 		editName = findViewById(R.id.editName)
 		editUsername = findViewById(R.id.editUsername)
@@ -148,7 +150,7 @@ class EditRecordActivity : AppCompatActivity() {
 			obj.put("password", password)
 			obj.put("comment", String(Base64.encode(comment.toByteArray(), Base64.DEFAULT)))
 			val json = JSON.stringify(obj)
-			val cdata = DefaultEncrypt(json.toByteArray(), blobOf(AppContext.passwordHash))
+			val cdata = DefaultEncrypt(json.toByteArray(), originKey.toByteArray())
 			val db = DBOpenHelper.liveDB?.writableDatabase
 			val cv = ContentValues()
 			cv.put("body", cdata)
