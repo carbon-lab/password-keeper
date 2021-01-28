@@ -92,11 +92,13 @@ class ImportExportActivity : AppCompatActivity() {
 					val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
 					intent.type = "*/*"
 					intent.addCategory(Intent.CATEGORY_OPENABLE)
+					ActivityManager.activityCount += 1
 					startActivityForResult(intent, 1)
 				} else if (mode == "EXPORT") {
 					val intent = Intent(Intent.ACTION_CREATE_DOCUMENT)
 					intent.type = "*/*"
 					intent.addCategory(Intent.CATEGORY_OPENABLE)
+					ActivityManager.activityCount += 1
 					startActivityForResult(intent, 1)
 				}
 				return true
@@ -113,6 +115,7 @@ class ImportExportActivity : AppCompatActivity() {
 					var path = data?.data?.path
 					path = path?.replace("/document/primary:", "/sdcard/")
 					editFilePath.setText(path)
+					ActivityManager.activityCount -= 1
 				}
 			}
 		}
