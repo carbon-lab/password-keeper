@@ -1,6 +1,7 @@
 package tech.sobin.goalkeeper
 
 import android.content.ContentValues
+import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
 import android.text.InputType
@@ -38,6 +39,8 @@ class EditRecordActivity : AppCompatActivity() {
 	private var originPassword: String = ""
 	private var originComment: String = ""
 
+	private lateinit var passwordTypeface: Typeface
+
 	@RequiresApi(Build.VERSION_CODES.O)
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -46,6 +49,7 @@ class EditRecordActivity : AppCompatActivity() {
 			WindowManager.LayoutParams.FLAG_SECURE,
 			WindowManager.LayoutParams.FLAG_SECURE)
 		ActivityManager.push(this)
+		passwordTypeface = Typeface.createFromAsset(assets, "consola.ttf")
 
 		isNew = intent.getBooleanExtra("new", true)
 		originKey = intent.getStringExtra("origin_key")
@@ -69,11 +73,13 @@ class EditRecordActivity : AppCompatActivity() {
 		}
 
 		switchLight.setOnCheckedChangeListener { _, isChecked ->
-			editPassword.inputType =
-				if (isChecked)
-					InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
-				else
-					InputType.TYPE_CLASS_TEXT.or(InputType.TYPE_TEXT_VARIATION_PASSWORD)
+			if (isChecked) {
+				editPassword.inputType = InputType.TYPE_CLASS_TEXT
+				editPassword.typeface = passwordTypeface
+			}
+			else
+				editPassword.inputType = InputType.TYPE_CLASS_TEXT.or(
+					InputType.TYPE_TEXT_VARIATION_PASSWORD)
 		}
 
 		if (isNew) {
@@ -98,7 +104,8 @@ class EditRecordActivity : AppCompatActivity() {
 
 	private fun switchOn() {
 		switchLight.isChecked = true
-		editPassword.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+		editPassword.inputType = InputType.TYPE_CLASS_TEXT
+		editPassword.typeface = passwordTypeface
 	}
 
 	private fun switchOff() {

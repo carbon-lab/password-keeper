@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.text.InputType
 import android.util.Base64
@@ -20,11 +21,7 @@ import tech.sobin.json.JSArray
 import tech.sobin.json.JSON
 import tech.sobin.json.JSObject
 import tech.sobin.json.JSString
-import java.io.File
-import java.io.FileInputStream
-import java.io.FileOutputStream
 import java.io.IOException
-import java.lang.Exception
 
 
 class ImportExportActivity : AppCompatActivity() {
@@ -104,18 +101,19 @@ class ImportExportActivity : AppCompatActivity() {
 				return true
 			}
 		})
-
-		editFilePath.setOnClickListener {}
 	}
 
 	override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 		when (requestCode) {
 			1 -> {
 				if (resultCode == Activity.RESULT_OK) {
-					var path = data?.data?.path
-					path = path?.replace("/document/primary:", "/sdcard/")
-					editFilePath.setText(path)
-					ActivityManager.activityCount -= 1
+					try {
+						val uri = data?.data!!.toString()
+						editFilePath.setText(uri)
+						ActivityManager.activityCount -= 1
+					} catch (e: Exception) {
+						alert(R.string.failed)
+					}
 				}
 			}
 		}
@@ -128,13 +126,12 @@ class ImportExportActivity : AppCompatActivity() {
 
 		try {
 			// Get File Path
-			val path = editFilePath.text.toString()
-			if (path.isEmpty()) {
+			val uri = editFilePath.text.toString()
+			if (uri.isEmpty()) {
 				alert(R.string.alert_choose_path)
 				return
 			}
-			val file = File(path)
-			val fos = FileOutputStream(file)
+			val fos = contentResolver.openOutputStream(Uri.parse(uri), "w")!!
 			// Prepare data
 			val obj = JSObject()
 			obj.put("key_hash", AppContext.passwordHash)
@@ -164,14 +161,13 @@ class ImportExportActivity : AppCompatActivity() {
 
 		try {
 			// Get File Path
-			val path = editFilePath.text.toString()
-			if (path.isEmpty()) {
+			val uri = editFilePath.text.toString()
+			if (uri.isEmpty()) {
 				alert(R.string.alert_choose_path)
 				return
 			}
-			val file = File(path)
-			val fis = FileInputStream(file)
-			val fsize = file.length()
+			val fis = contentResolver.openInputStream(Uri.parse(uri))!!
+			val fsize = fis.available()
 			if (fsize > 1073741824) throw Exception()
 			val buffer = ByteArray(fsize.toInt())
 			fis.read(buffer)
